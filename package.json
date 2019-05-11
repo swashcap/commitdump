@@ -5,5 +5,11 @@
   "main": "src/index.js",
   "repository": "git@github.com:swashcap/commitdump.git",
   "author": "Cory Reed",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "prettier": "^1.17.0"
+  },
+  "scripts": {
+    "format": "prettier --write 'src/**/*.js'"
+  }
 }
