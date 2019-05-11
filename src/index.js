@@ -3,8 +3,8 @@ const execa = require('execa')
 
 log = debug('commitdump')
 
-const DELETIONS_PATTERN = /(\d+) deletions\(-\)/
-const INSERTIONS_PATTERN = /(\d+) insertions\(\+\)/
+const DELETIONS_PATTERN = /(\d+) deletions?\(-\)/
+const INSERTIONS_PATTERN = /(\d+) insertions?\(\+\)/
 
 const parseShortStat = input => {
   const deletionsMatches = input.match(DELETIONS_PATTERN)
