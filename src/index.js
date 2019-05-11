@@ -1,6 +1,13 @@
+const debug = require('debug')
 const execa = require('execa')
 
-export const commitdump = async ({ cwd, since } = {}) => {
+log = debug('commitdump')
+
+const commitdump = async (options = {}) => {
+  log('options:', options)
+
+  const { cwd, since } = options
+
   /**
    * {@link https://git-scm.com/docs/pretty-formats}
    */
@@ -17,9 +24,13 @@ export const commitdump = async ({ cwd, since } = {}) => {
     argv.push(`--since=${since}`)
   }
 
-  const { stdout } = await execa('git', argv, {
+  const { stderr, stdout } = await execa('git', argv, {
     cwd,
   })
 
+  log('stderr:', stderr)
+
   return `${Array.from(fields.keys()).join(',')}\n${stdout}`
 }
+
+module.exports.commitdump = commitdump
