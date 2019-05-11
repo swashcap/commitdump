@@ -3,22 +3,27 @@ const execa = require('execa')
 
 log = debug('commitdump')
 
-const SHORT_STAT_PATTERN = /(\d+) insertions\(\+\),\s+(\d+) deletions\(-\)/
+const DELETIONS_PATTERN = /(\d+) deletions\(-\)/
+const INSERTIONS_PATTERN = /(\d+) insertions\(\+\)/
 
 const parseShortStat = input => {
-  const matches = INSERTIONS_PATTERN.match(input)
-  let deletions
-  let insertions
+  const deletionsMatches = input.match(DELETIONS_PATTERN)
+  const insertionsMatches = input.match(INSERTIONS_PATTERN)
+  let deletions = 0
+  let insertions = 0
 
-  if (Array.isArray(matches)) {
-    ;[, insertions, deletions] = matches
+  if (deletionsMatches && deletionsMatches[1]) {
+    deletions = parseInt(deletionsMatches[1], 10)
+  }
+  if (insertionsMatches && insertionsMatches[1]) {
+    insertions = parseInt(insertionsMatches[1], 10)
   }
 
   return { deletions, insertions }
 }
 
 const getCommitDiffStat = async options => {
-  log('', options)
+  log('diffstat options:', options)
 
   const { cwd, sha } = options
 
@@ -26,11 +31,14 @@ const getCommitDiffStat = async options => {
     cwd,
   })
 
+  log('diffstat stderr:', stderr)
+  log('diffstat stdout:', stdout)
+
   return parseShortStat(stdout)
 }
 
 const commitdump = async (options = {}) => {
-  log('options:', options)
+  log('dump options:', options)
 
   const { cwd, since } = options
 
@@ -54,9 +62,19 @@ const commitdump = async (options = {}) => {
     cwd,
   })
 
-  log('stderr:', stderr)
+  log('dump stderr:', stderr)
 
-  return `${Array.from(fields.keys()).join(',')}\n${stdout}`
+  const results = await Promise.all(
+    stdout.split('\n').map(async line => {
+      const sha = line.split(',')[0]
+      const { deletions, insertions } = await getCommitDiffStat({ cwd, sha })
+      return `${line},${insertions},${deletions}`
+    })
+  )
+
+  return `${[...Array.from(fields.keys()), 'Insertions', 'Deletions'].join(
+    ','
+  )}\n${results.join('\n')}`
 }
 
 module.exports = {
