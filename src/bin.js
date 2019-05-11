@@ -9,7 +9,7 @@ const { commitdump } = require('./index.js')
 const cli = meow(
   `
   Usage
-    $ commitdump
+    $ commitdump <path to repo>
 
   Options
     --since  Date
@@ -31,11 +31,7 @@ if (cli.input[0]) {
     : path.join(process.cwd(), cli.input[0])
 }
 
-;async () => {
-  console.log(
-    await commitdump({
-      cwd,
-      since: cli.flags.since,
-    })
-  )
-}
+commitdump({
+  cwd,
+  since: cli.flags.since,
+}).then(console.log)
