@@ -42,7 +42,7 @@ test('get shortstat', async t => {
   })
   t.deepEqual(diffStat, {
     deletions: 0,
-    insertions: 3996,
+    insertions: 264,
   })
 })
 

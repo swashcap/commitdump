@@ -27,7 +27,7 @@ const getCommitDiffStat = async options => {
 
   const { cwd, sha } = options
 
-  const { stderr, stdout } = await execa('git', ['diff', sha, '--shortstat'], {
+  const { stderr, stdout } = await execa('git', ['show', sha, '--shortstat'], {
     cwd,
   })
 
