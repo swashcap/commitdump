@@ -33,3 +33,15 @@ test('parseShortStat', t => {
     'no insertions'
   )
 })
+
+test('get shortstat', async t => {
+  // Dogfood on this project's commit history
+  const diffStat = await getCommitDiffStat({
+    cwd: process.cwd(),
+    sha: 'a633653',
+  })
+  t.deepEqual(diffStat, {
+    deletions: 0,
+    insertions: 3996,
+  })
+})
