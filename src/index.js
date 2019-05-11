@@ -3,6 +3,32 @@ const execa = require('execa')
 
 log = debug('commitdump')
 
+const SHORT_STAT_PATTERN = /(\d+) insertions\(\+\),\s+(\d+) deletions\(-\)/
+
+const parseShortStat = input => {
+  const matches = INSERTIONS_PATTERN.match(input)
+  let deletions
+  let insertions
+
+  if (Array.isArray(matches)) {
+    ;[, insertions, deletions] = matches
+  }
+
+  return { deletions, insertions }
+}
+
+const getCommitDiffStat = async options => {
+  log('', options)
+
+  const { cwd, sha } = options
+
+  const { stderr, stdout } = await execa('git', ['diff', sha, '--shortstat'], {
+    cwd,
+  })
+
+  return parseShortStat(stdout)
+}
+
 const commitdump = async (options = {}) => {
   log('options:', options)
 
@@ -33,4 +59,8 @@ const commitdump = async (options = {}) => {
   return `${Array.from(fields.keys()).join(',')}\n${stdout}`
 }
 
-module.exports.commitdump = commitdump
+module.exports = {
+  commitdump,
+  getCommitDiffStat,
+  parseShortStat,
+}
