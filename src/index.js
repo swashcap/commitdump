@@ -15,7 +15,7 @@ const commitdump = async (options = {}) => {
     ['Commit', '%h'],
     ['Author name', '%an'],
     ['Author email', '%ae'],
-    ['Author date', '%aD'],
+    ['Author date', '%aI'],
   ])
 
   const argv = ['log', `--format=${Array.from(fields.values()).join(',')}`]
