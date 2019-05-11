@@ -8,12 +8,14 @@
   "author": "Cory Reed",
   "license": "Apache-2.0",
   "devDependencies": {
+    "ava": "^1.4.1",
     "husky": "^2.2.0",
     "lint-staged": "^8.1.6",
     "prettier": "^1.17.0"
   },
   "scripts": {
-    "format": "prettier --write 'src/**/*.js'"
+    "format": "prettier --write '{src,test}/**/*.js'",
+    "test": "ava"
   },
   "dependencies": {
     "debug": "^4.1.1",
