@@ -1,0 +1,5 @@
+{
+  "linters": {
+    "*.js": ["yarn format", "git add"]
+  }
+}

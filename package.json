@@ -7,6 +7,8 @@
   "author": "Cory Reed",
   "license": "Apache-2.0",
   "devDependencies": {
+    "husky": "^2.2.0",
+    "lint-staged": "^8.1.6",
     "prettier": "^1.17.0"
   },
   "scripts": {
