@@ -45,3 +45,11 @@ test('get shortstat', async t => {
     insertions: 3996,
   })
 })
+
+// Smoke test
+test('commitdump', async t => {
+  const results = await commitdump({
+    cwd: process.cwd(),
+  })
+  t.truthy(typeof results === 'string' && results.split('\n').length > 2)
+})
