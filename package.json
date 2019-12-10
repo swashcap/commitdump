@@ -10,7 +10,7 @@
   "devDependencies": {
     "ava": "^2.4.0",
     "husky": "^3.1.0",
-    "lint-staged": "^8.1.6",
+    "lint-staged": "^9.5.0",
     "prettier": "^1.17.0"
   },
   "scripts": {
