@@ -8,7 +8,7 @@
   "author": "Cory Reed",
   "license": "Apache-2.0",
   "devDependencies": {
-    "ava": "^1.4.1",
+    "ava": "^2.4.0",
     "husky": "^2.2.0",
     "lint-staged": "^8.1.6",
     "prettier": "^1.17.0"
