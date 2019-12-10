@@ -1,6 +1,6 @@
 {
-  "name": "commitdump",
-  "version": "1.0.0",
+  "name": "@swashcap/commitdump",
+  "version": "1.0.1",
   "description": "Dump information about a repository's commits",
   "bin": "src/bin.js",
   "main": "src/index.js",
